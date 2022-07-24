@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/requests-test
+requests-test.so
+requests-test.dylib
+requests-test.dll
+requests-test.a
+requests-test.lib
+requests-test-test-*
+*.exe
+*.o
+*.obj
+*.lst

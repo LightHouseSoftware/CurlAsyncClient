@@ -1,0 +1,5 @@
+name "requests-test"
+description "A minimal D application."
+authors "Bagomot"
+copyright "Copyright © 2022, Bagomot"
+license "proprietary"
