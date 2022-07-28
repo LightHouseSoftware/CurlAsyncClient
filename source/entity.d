@@ -95,20 +95,7 @@ struct Request {
     JSONValue postBody;
 }
 
-struct Artifact {
-    string url;
-    string path;
-}
-
 struct Progress {
-    import std.concurrency;
-
-    Tid tid;
     size_t total;
     size_t current;
-}
-
-struct Data {
-    ubyte[] data;
-    alias data this;
 }

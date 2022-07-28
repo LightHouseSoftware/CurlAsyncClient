@@ -26,7 +26,7 @@ class MultifileProgressListener : EventListener {
     private Progress[Tid] _progresses;
 
     public void watch(size_t total, size_t current) {
-        _progresses[thisTid] = Progress(thisTid, total, current);
+        _progresses[thisTid] = Progress(total, current);
         display(_progresses);
     }
 
