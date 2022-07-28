@@ -2,6 +2,8 @@ module listener;
 
 import std.stdio;
 
+import entity;
+
 interface EventListener {
 }
 
@@ -13,7 +15,7 @@ class ProgressListener : EventListener {
         int progress = cast(int)(100.0 * current / total);
         if (_progress < progress) {
             _progress = progress;
-            synchronized writefln("Downloading %d%%.", _progress);
+            writefln("Downloading %d%%.", _progress);
         }
     }
 }
@@ -21,14 +23,21 @@ class ProgressListener : EventListener {
 class MultifileProgressListener : EventListener {
     import std.concurrency;
 
-    private Tid _ownerTid;
-
-    this(Tid ownerTid) {
-        _ownerTid = ownerTid;
-    }
+    private Progress[Tid] _progresses;
 
     public void watch(size_t total, size_t current) {
-        _ownerTid.send(thisTid, total, current);
+        _progresses[thisTid] = Progress(thisTid, total, current);
+        display(_progresses);
+    }
+
+    private void display(Progress[Tid] progresses) {
+        import std.algorithm;
+        import std.stdio;
+
+        const current = progresses.byValue.map!(p => p.current).sum;
+        const total = progresses.byValue.map!(p => p.total).sum;
+        int progress = cast(int)(100.0 * current / total);
+        writefln("Downloading %d%%.", progress);
     }
 }
 
@@ -51,6 +60,11 @@ class SaveListener : EventListener {
         p.mkdirRecurse;
 
         _file = File(path, "wb");
+    }
+
+    ~this() {
+        if (_file.isOpen)
+            _file.close;
     }
 
     public void watch(ubyte[] data) {
