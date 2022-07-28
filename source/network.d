@@ -46,6 +46,8 @@ class Network {
 
     public static void multiDownload(T : EventListener)(Request[] requests, T listener = null,
         Callback callback = null, string accessToken = null, HttpHeader[] headers = null) {
+        import std.parallelism;
+
         foreach (Request req; requests.parallel) {
             HttpConn conn = Network.download(req);
             if (accessToken !is null)
