@@ -1,5 +1,5 @@
-name "requests-test"
-description "A minimal D application."
+name "cac"
+description "Curl async example client."
 authors "Bagomot"
 copyright "Copyright © 2022, Bagomot"
-license "proprietary"
+license "ESL"
